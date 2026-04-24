@@ -219,10 +219,10 @@ body {
 
 /* ── RESULT ── */
 .score-label {
-  font-size: 0.65rem;
+  font-size: 1.65rem;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: var(--dim);
+  color: var(--fg);
 }
 
 .score-display {

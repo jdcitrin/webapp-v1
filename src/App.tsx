@@ -19,12 +19,20 @@ const MODE_DESCS: Record<Mode, string> = {
 };
 
 const SCORE_LABEL = (s: number) => {
-  if (s >= 9.5) return "PERFECT";
-  if (s >= 8) return "GREAT";
-  if (s >= 6) return "GOOD";
-  if (s >= 4) return "CLOSE";
-  if (s >= 2) return "ROUGH";
-  return "MISS";
+  if (s >= 9.9) return "alright buddy put your timer away"; 
+  if (s >= 9.5) return "just a little closer";
+  if (s >= 9.0) return "nerd";
+  if (s >= 8.5) return "great, i guess";
+  if (s >= 8.0) return "alright";
+  if (s >= 7.0) return "good-ish";
+  if (s >= 6.0) return "mediocre";
+  if (s >= 5.0) return "could be worse";
+  if (s >= 4.0) return "so close yet so far";
+  if (s >= 3.0) return "rough watch";
+  if (s >= 2.0) return "yikes";
+  if (s >= 1.0) return "embarrassing";
+  if (s >= 0.5) return "clueless";
+  return "give up";
 };
 
 export default function App() {
@@ -140,7 +148,7 @@ export default function App() {
       {phase === "timing" && (
         <button className="screen timing tap-zone" onClick={stopTimer}>
           <div className="pulse-ring" />
-          <div className="tap-hint">TAP TO STOP</div>
+          <div className="tap-hint">PRESS ANYTHING TO STOP</div>
         </button>
       )}
 
