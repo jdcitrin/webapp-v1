@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { Mode, GameResult } from "./game";
 import { generateTarget, calcScore, formatTime } from "./game";
-import { playStartBeep, scheduleDeceptiveTicks } from "./audio";
+import { playStartBeep, scheduleDeceptiveTicks, startHardHum, stopHardHum } from "./audio";
 import "./App.css";
 
 type Phase = "home" | "reveal" | "timing" | "result";
@@ -14,8 +14,8 @@ const MODE_LABELS: Record<Mode, string> = {
 
 const MODE_DESCS: Record<Mode, string> = {
   easy: "whole seconds",
-  medium: "decimal precision",
-  hard: "deceptive noise",
+  medium: "precision",
+  hard: "deception",
 };
 
 const SCORE_LABEL = (s: number) => {
@@ -121,10 +121,10 @@ export default function App() {
             {(["easy", "medium", "hard"] as Mode[]).map((m) => (
               <button
                 key={m}
-                className={`mode-tab ${mode === m ? "active" : ""}`}
+                className={`mode-tab ${mode === m ? "active" : ""} ${hoverMode === "hard" && m === "hard" ? "hard-hover" : ""}`}
                 onClick={() => setMode(m)}
-                onMouseEnter={() => setHoverMode(m)}
-                onMouseLeave={() => setHoverMode(null)}
+                onMouseEnter={() => { setHoverMode(m); if (m === "hard") startHardHum(); }}
+                onMouseLeave={() => { setHoverMode(null); if (m === "hard") stopHardHum(); }}
               >
                 <span className="mode-name">{MODE_LABELS[m]}</span>
                 <span className="mode-desc">{MODE_DESCS[m]}</span>

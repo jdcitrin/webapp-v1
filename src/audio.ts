@@ -54,3 +54,53 @@ export function scheduleDeceptiveTicks(durationSeconds: number): () => void {
 
   return () => timeouts.forEach(clearTimeout);
 }
+
+let humNodes: { osc: OscillatorNode; osc2: OscillatorNode; gain: GainNode } | null = null;
+
+export function startHardHum() {
+  const ctx = getAudioCtx();
+  if (humNodes) return;
+
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0, ctx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.018, ctx.currentTime + 1.2);
+  gain.connect(ctx.destination);
+
+  // Deep sine drone at 40Hz with a very slow pitch wobble
+  const osc = ctx.createOscillator();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(40, ctx.currentTime);
+
+  // Subtle second sine one octave up for a bit of body
+  const osc2 = ctx.createOscillator();
+  osc2.type = "sine";
+  osc2.frequency.setValueAtTime(80, ctx.currentTime);
+  const osc2gain = ctx.createGain();
+  osc2gain.gain.setValueAtTime(0.4, ctx.currentTime);
+  osc2.connect(osc2gain);
+  osc2gain.connect(gain);
+
+  const lfo = ctx.createOscillator();
+  const lfoGain = ctx.createGain();
+  lfo.frequency.setValueAtTime(0.25, ctx.currentTime);
+  lfoGain.gain.setValueAtTime(1.5, ctx.currentTime);
+  lfo.connect(lfoGain);
+  lfoGain.connect(osc.frequency);
+
+  osc.connect(gain);
+  osc.start();
+  osc2.start();
+  lfo.start();
+
+  humNodes = { osc, osc2, gain };
+}
+
+export function stopHardHum() {
+  if (!humNodes) return;
+  const ctx = getAudioCtx();
+  humNodes.gain.gain.setValueAtTime(humNodes.gain.gain.value, ctx.currentTime);
+  humNodes.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.8);
+  const { osc, osc2 } = humNodes;
+  humNodes = null;
+  setTimeout(() => { osc.stop(); osc2.stop(); }, 900);
+}
