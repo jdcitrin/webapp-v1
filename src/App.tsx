@@ -94,6 +94,13 @@ export default function App() {
     setResult(null);
   }, []);
 
+  useEffect(() => {
+    if (phase !== "timing") return;
+    const handler = () => stopTimer();
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [phase, stopTimer]);
+
   return (
     <div className={`app phase-${phase}`}>
       {phase === "home" && (
