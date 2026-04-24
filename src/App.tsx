@@ -6,6 +6,10 @@ import "./App.css";
 
 type Phase = "home" | "reveal" | "timing" | "result";
 
+const SEP = " ";
+const MARQUEE_HALF = Array(14).fill("timefli.gg").join(SEP);
+const MARQUEE_TEXT = MARQUEE_HALF + SEP + MARQUEE_HALF + SEP;
+
 const MODE_LABELS: Record<Mode, string> = {
   easy: "EASY",
   medium: "MEDIUM",
@@ -114,8 +118,11 @@ export default function App() {
     <div className={`app phase-${phase}`}>
       {phase === "home" && (
         <div className="screen home" data-glow={hoverMode ?? "default"}>
-          <h1 className="title">timefli.gg</h1>
-          <p className="subtitle">count</p>
+          <h1 className="title">
+            <span className="title-base">timefli.gg</span>
+            <span className="title-rainbow" aria-hidden>timefli.gg</span>
+          </h1>
+          <p className="subtitle">got time?</p>
 
           <div className="mode-tabs">
             {(["easy", "medium", "hard"] as Mode[]).map((m) => (
@@ -135,6 +142,13 @@ export default function App() {
           <button className="btn-start" onClick={startGame}>
             START
           </button>
+
+          <div className="marquee-wrap marquee-top">
+            <div className="marquee-inner">{MARQUEE_TEXT}</div>
+          </div>
+          <div className="marquee-wrap marquee-bottom">
+            <div className="marquee-inner">{MARQUEE_TEXT}</div>
+          </div>
         </div>
       )}
 
