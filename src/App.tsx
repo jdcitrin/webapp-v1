@@ -106,7 +106,7 @@ export default function App() {
       {phase === "home" && (
         <div className="screen home">
           <h1 className="title">timefli.gg</h1>
-          <p className="subtitle">count the seconds. blind.</p>
+          <p className="subtitle">count</p>
 
           <div className="mode-tabs">
             {(["easy", "medium", "hard"] as Mode[]).map((m) => (
