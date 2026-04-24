@@ -38,6 +38,7 @@ const SCORE_LABEL = (s: number) => {
 export default function App() {
   const [mode, setMode] = useState<Mode>("easy");
   const [phase, setPhase] = useState<Phase>("home");
+  const [hoverMode, setHoverMode] = useState<Mode | null>(null);
   const [target, setTarget] = useState(0);
   const [result, setResult] = useState<GameResult | null>(null);
   const [revealCountdown, setRevealCountdown] = useState(3);
@@ -112,7 +113,7 @@ export default function App() {
   return (
     <div className={`app phase-${phase}`}>
       {phase === "home" && (
-        <div className="screen home">
+        <div className="screen home" data-glow={hoverMode ?? "default"}>
           <h1 className="title">timefli.gg</h1>
           <p className="subtitle">count</p>
 
@@ -122,6 +123,8 @@ export default function App() {
                 key={m}
                 className={`mode-tab ${mode === m ? "active" : ""}`}
                 onClick={() => setMode(m)}
+                onMouseEnter={() => setHoverMode(m)}
+                onMouseLeave={() => setHoverMode(null)}
               >
                 <span className="mode-name">{MODE_LABELS[m]}</span>
                 <span className="mode-desc">{MODE_DESCS[m]}</span>
