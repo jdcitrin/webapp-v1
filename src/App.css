@@ -1,0 +1,287 @@
+/* ── reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080808;
+  --fg: #f0f0f0;
+  --dim: #555;
+  --font: 'SF Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+#root { width: 100%; }
+
+/* ── app shell ── */
+.app {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  min-height: 100svh;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HOME ── */
+.title {
+  font-size: clamp(4rem, 18vw, 9rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fg);
+}
+
+.subtitle {
+  font-size: clamp(0.65rem, 2.2vw, 0.85rem);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-top: -1.2rem;
+}
+
+.mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: min(420px, 90vw);
+}
+
+.mode-tab {
+  background: transparent;
+  border: 1px solid #1e1e1e;
+  color: var(--dim);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  font-family: var(--font);
+}
+
+.mode-tab:hover {
+  border-color: #333;
+  color: #999;
+}
+
+.mode-tab.active {
+  border-color: var(--fg);
+  color: var(--fg);
+  background: #111;
+}
+
+.mode-name {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+}
+
+.mode-desc {
+  font-size: 0.55rem;
+  color: var(--dim);
+  letter-spacing: 0.05em;
+}
+
+.mode-tab.active .mode-desc {
+  color: #777;
+}
+
+/* ── buttons ── */
+.btn-start {
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  touch-action: manipulation;
+}
+
+.btn-start:hover  { opacity: 0.85; }
+.btn-start:active { transform: scale(0.97); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--dim);
+  border: 1px solid #1e1e1e;
+  border-radius: 6px;
+  font-family: var(--font);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.btn-ghost:hover { color: var(--fg); border-color: #333; }
+
+/* ── REVEAL ── */
+.reveal-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.target-display {
+  font-size: clamp(5rem, 22vw, 11rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fg);
+}
+
+.reveal-countdown {
+  font-size: clamp(1.2rem, 5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--dim);
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* ── TIMING ── */
+.tap-zone {
+  background: var(--bg);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.pulse-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid #1e1e1e;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1);    opacity: 0.5; }
+  50%  { transform: scale(1.3);  opacity: 0.15; }
+  100% { transform: scale(1);    opacity: 0.5; }
+}
+
+.tap-hint {
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  color: #1e1e1e;
+  text-transform: uppercase;
+}
+
+/* ── RESULT ── */
+.score-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.score-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.score-num {
+  font-size: clamp(5rem, 20vw, 10rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--fg);
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.score-denom {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  color: var(--dim);
+  font-weight: 400;
+}
+
+.score-bar-track {
+  width: min(300px, 75vw);
+  height: 1px;
+  background: #1a1a1a;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  background: var(--fg);
+  border-radius: 1px;
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.result-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: min(340px, 85vw);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stat-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.stat-val {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.stat-val.diff {
+  color: #666;
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
