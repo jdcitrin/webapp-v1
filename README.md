@@ -1,4 +1,4 @@
-DIAL :D, time guessing game to hone your internal clock. 
+timefli.gg :D, time guessing game to hone your internal clock. 
 
 
 MORE COMING SOON!

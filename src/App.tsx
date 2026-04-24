@@ -105,7 +105,7 @@ export default function App() {
     <div className={`app phase-${phase}`}>
       {phase === "home" && (
         <div className="screen home">
-          <h1 className="title">DIAL</h1>
+          <h1 className="title">timefli.gg</h1>
           <p className="subtitle">count the seconds. blind.</p>
 
           <div className="mode-tabs">
